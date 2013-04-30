@@ -1,0 +1,172 @@
+<?php 
+$css_url = $this->css_url;
+$js_url = $this->js_url;
+$relative_path = $this->relative_path;
+$absolute_path = $this->absolute_path;
+$public_path = $this->public_path;
+$absolute_url = $this->absolute_url;
+$css_url = $this->css_url;
+$js_url = $this->js_url;
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <?php echo $this->headMeta()->setCharset('UTF-8'); ?>
+        
+        <title>
+            <?php echo $this->page_title;?>
+        </title>
+        
+		<?php
+		echo $this->headLink()	->appendStylesheet($css_url . 'reset.css')
+								->appendStylesheet($css_url . 'estilo.css')
+								->appendStylesheet($css_url . 'slide.css')
+								->appendStylesheet($css_url . 'estilo.css');
+		
+		echo $this->headScript()->appendFile($js_url . 'jquery.js')
+								->appendFile($js_url . 'script.js')
+								->appendFile($js_url . 'html5.js')
+								->appendFile($js_url . 'jquery.easing.1.3.js')
+								->appendFile($js_url . 'slides.min.jquery.js');
+		?>
+        
+        <meta name="keywords" content="" />
+        <meta name="description" content="">
+        <meta name="author" content="Diogo Carvalho de Farias">
+        <meta name="contact" content="contato@diogoc.com.br"> 
+        <meta name="robots" content="index,follow" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+        <script type="text/javascript">
+            var wl = window.location;
+            urlSite = wl.protocol + '//' + wl.hostname + '/' + wl.pathname.split('/')[1] + '/';
+
+            $(function(){
+                $('#slides').slides({
+                    preload: true,
+                    preloadImage: 'public/imgs/loading.gif',
+                    play: 5000,
+                    pause: 2500,
+                    hoverPause: true
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <div id="geral" class="container_12">
+
+            <header class="grid_12 clearfix" id="topo"><!--INICIO TOPO-->
+                <div id="logo" class="grid_4"><!--inicio logo-->
+                    <h1>
+                        <a class="home" href="<?php echo $absolute_url; ?>">Shop Limpeza - Soluções em limpeza profissional</a>
+                    </h1>
+                </div><!--fim logo-->
+
+                <nav id="menu" class="grid_8 clearfix"><!--inicio menu-->
+                    <ul>
+                        <?php 
+                        $controller = $this->params['controller'];
+                        $action = $this->params['action'];
+                        $class_active = 'ativo';
+                        ?>
+                        <li>
+                        	<a href="empresa/" class="ativo">A Empresa</a>
+                        </li>
+                        <li>
+                       		<a href="produtos" class="">Nossos Produtos</a>
+                            <ul class="sub_menu">
+                                <li><a href="">Químicos</a>
+                                    <ul class="sub_menu_2">
+                                        <li><a href="">Higiene Pessoal </a></li>
+                                        <li><a href="">Food Service</a></li>
+                                        <li><a href="">Limpadores Desinfetantes</a></li>
+                                        <li><a href="">Limpadores Especiais</a></li>
+                                        <li><a href="">Tratamento de Pisos</a></li>
+                                        <li><a href="">Lavanderia</a></li>
+                                        <li><a href="">Especialidades</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="">Funcionais</a>
+                                    <ul class="sub_menu_2">
+                                        <li><a href="">Linha Vidro</a></li>
+                                        <li><a href="">Linha Piso</a></li>
+                                        <li><a href="">Carros Funcionais</a></li>
+                                        <li><a href="">Baldes</a></li>
+                                        <li><a href="">Coletores</a></li>
+                                        <li><a href="">Dispensers</a></li>
+                                        <li><a href="">Papéis</a></li>
+                                        <li><a href="">Lixeiras</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                Procedimento de Higiene
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Contato
+                            </a>
+                        </li>
+                    </ul>
+                </nav><!--fim menu-->
+
+            </header><!--FIM TOPO-->
+
+            <?php echo $this->layout()->content; ?>
+        </div> <!-- fim geral -->
+        <footer id="rodape"><!--INICIO RODAPE-->
+            
+            <div class="footer container_12">
+                <div class="grid_3 alpha">
+                    <h3>Área Restrita</h3>
+                    <form action="">
+                        <div>
+                            <input type="text" name="login" placeholder="login">
+                        </div>
+                        <div>
+                            <input type="text" name="senha" placeholder="senha">
+                        </div>
+                        <div class="envio">
+                            <input type="submit" value="ok">
+                        </div>
+                    </form>
+                </div>
+                <div class="grid_5 end">
+                    <h3>Endereço</h3>
+                    <address>
+                        Rua Francisco de Assis Teixeira, 392 A, Cohab<br/>Cabo de Santo Agostinho - Pernambuco
+                    </address>
+                    <p>Vendas: +55 (81) 3518-2188</p>
+                    <p class="mail">E-mail:&nbsp;</p>
+                    <a href="mailto:vendas@shoplimpeza.com.br">vendas@shoplimpeza.com.br</a>
+                </div>
+                <div class="grid_3">
+                    <h3>Links Rápidos</h3>
+                    <a href="">Anvisa</a>
+                    <a href="">Ministério da Saúde</a>
+                    <a href="">Ministério do meio Ambiente</a>
+                </div>
+
+                <div class="grid_12 alpha omega ass">
+                    <address>Shop Limpeza &copy; <?php echo date('Y'); ?> - Todos os Direitos Reservados</address>
+                </div>
+            </div>
+
+        </footer><!--FIM RODAPE-->
+
+
+    </body>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+</html>

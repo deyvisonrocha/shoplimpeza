@@ -1,0 +1,15 @@
+
+
+.slideshow { margin: auto }
+.slideshow img { width: 200px; height: 100px; margin: 5px; }
+div.responsive img { width: auto; height: auto }
+.cycle-pager { position: static; margin-top: 5px }
+div.vertical { width: 100px }
+
+
+.center{position:relative; top: -55px;}
+.navegar{ background: url(../imgs/nav.png) no-repeat; position: absolute; display:block; width:18px; height:29px; float: left; overflow:hidden; text-indent: -999px;}
+#prev4{ background-position: left top; left:0;}
+#prev4:hover{ background-position: left bottom}
+#next4{ background-position: right top; right:0;}
+#next4:hover{ background-position: right bottom}
