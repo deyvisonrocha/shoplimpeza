@@ -1,4 +1,4 @@
 ## Shopping Limpeza
 
-* Desenvolvedor
+### __Desenvolvedor__
 - [Deyvison Rocha](mailto:deyvison@gmail.com)
