@@ -101,15 +101,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 	private function setupRouter()
 	{
-		//Zend_Registry::set('router', $this->_frontController->getRouter());
+		Zend_Registry::set('router', $this->_frontController->getRouter());
 		
-		$router = $this->_frontController->getRouter();
-		
-		$route = new Zend_Controller_Router_Route(
-				'/empresa',
-				array('module' => 'default', 'controller' => 'Index', 'action' => 'empresa')
-		);
-		$router->addRoute('EmpresaRouter', $route);
+		include_once (APPLICATION_PATH . '/configs/routes/defaultRoutes.php');
 	}
 
 	private function setupFrontController()
