@@ -12,7 +12,9 @@ class IndexController extends CoreController
 	{
 		
 	}
-
-
-
+	
+	public function contatoAction()
+	{
+		
+	}
 }
