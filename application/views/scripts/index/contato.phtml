@@ -1,0 +1,111 @@
+            <section id="quem-somos" class="grid_8 alpha clearfix conteudo">
+
+                <article class="grid_12">
+                    <div class="grid_4 alpha box">
+                        <h2 class="titulo">Entre em <span>Contato</span></h2>
+                        
+                        <div id="messageContact" style="display:none;"></div>
+
+                        <form id="contato" action="">
+                            <div>
+                                <input type="text" name="nome" placeholder="nome">
+                            </div>
+                            <div>
+                                <input type="text" name="email" placeholder="e-mail">
+                            </div>
+                            <div>
+                                <input type="text" name="telefone" placeholder="telefone">
+                            </div>
+                            <div>
+                                <textarea name="mensagem" id="mensagem" rows="7" placeholder="mensagem"></textarea>
+                            </div>
+                            <div class="envio">
+                                <input type="submit" value="enviar">
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="grid_8 omega box">
+                        <h2 class="titulo">Onde <span>Estamos</span></h2>
+
+                        <div class="grid_5 alpha">
+                            <iframe width="380" height="270" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.br/maps?f=q&amp;source=s_q&amp;hl=pt-BR&amp;geocode=&amp;q=Cabo+de+Santo+Agostinho+-+PE&amp;aq=&amp;sll=-20.702313,-42.868346&amp;sspn=0.008521,0.013937&amp;ie=UTF8&amp;hq=&amp;hnear=Cabo+de+Santo+Agostinho+-+Pernambuco&amp;t=m&amp;z=11&amp;ll=-8.287443,-35.035314&amp;output=embed"></iframe>
+                        </div>
+                        <div class="grid_3 omega endereco">
+                            <p><span>Shop Limpeza</span></p>
+                            <p>Rua Francisco de Assis Teixeira, 392 - A. COHAB - Cabo de Santo Agostinho - PE.</p>
+                            <p>Contato: <span>+55 81 3518 - 2188</span></p>
+                            <p>Vendas: <span>+55 81 3518 - 2188</span></p>
+                            <p class="mail">E-mail: <a href="mailto:vendas@shoplimpeza.com.br"><span>vendas@shoplimpeza.com.br</span></a></p> 
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <script src="<?php echo $this->js_url;?>jquery.validate.js" type="text/javascript"></script>
+
+            <script type="text/javascript">
+
+                $(document).ready( function() {
+                    $("#contato").validate({
+                        // Define as regras
+                        rules:{
+                            nome:{
+                                // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                                required: true, minlength: 2
+                            },
+                            telefone:{
+                                // campoFone será obrigatório (required) e precisará ser um e-mail válido (email)
+                                required: true, minlength: 2
+                            },
+                            email:{
+                                // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+                                required: true, email: true
+                            },
+                            mensagem:{
+                                // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
+                                required: true, minlength: 2
+                            }
+                        },
+                        // Define as mensagens de erro para cada regra
+                        messages:{
+                            nome:{
+                                required: "Digite o seu nome",
+                                minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                            },
+                            telefone:{
+                                required: "Digite o seu telefone para contato",
+                                email: "Digite um telefone válido"
+                            },
+                            email:{
+                                required: "Digite o seu e-mail para contato",
+                                email: "Digite um e-mail válido"
+                            },
+                            mensagem:{
+                                required: "Digite a sua mensagem",
+                                minLength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+                            }
+                        },
+                        submitHandler: function( form ) {
+                            var dados = $( form ).serialize();
+  
+                            $.ajax({
+                                type: "POST",
+                                url: urlSite + "contato",
+                                data: dados,
+                                success: function( data ) {
+                                    if (data.status == 'success') {
+                                        $('#messageContact').html('<span style="color: green;">' + data.message + '</span>');
+                                    }
+                                    else {
+                                        $('#messageContact').html('<span style="color: red;">' + data.message + '</span>');
+                                    }
+                                    $('#messageContact').fadeIn(3000).delay(1000).fadeOut(3000);
+                                }
+                            });
+
+                            return false;
+                        }
+                    });
+                });                
+            </script>

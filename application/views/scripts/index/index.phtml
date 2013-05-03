@@ -1,1 +1,111 @@
-<?php echo $this->msg; ?>
+<?php 
+$this->headScript() ->prependFile($this->js_url . 'jquery.cycle2.min.js')
+					->prependFile($this->js_url . 'jquery.cycle2.carousel.js')
+					->prependFile($this->js_url . 'jquery.easing-1.3.pack.js')
+					->prependFile($this->js_url . 'jquery-easing-compatibility.1.2.pack.js')
+					->prependFile($this->js_url . 'coda-slider.1.1.1.pack.js');
+?>
+			<style type="text/css">
+			    body{ background: url(<?php echo $public_path; ?>imgs/bg_banner.jpg) repeat-x}
+			</style>
+
+			<script type="text/javascript">$.fn.cycle.defaults.autoSelector = '.slideshow';</script>
+
+			<section class="container_12 conteudo"><!--inicio conteudo-->
+
+			    <article id="example" class="grid_12 clearfix">  
+			      <div id="slides">
+			        <div class="slides_container">
+			          <div>
+			            <img src="<?php echo $this->imgs_url; ?>banner01.jpg" alt="Slide 1" />
+			          </div>
+			          <div>
+			            <img src="<?php echo $this->imgs_url; ?>banner02.jpg" alt="Slide 2" />
+			          </div>
+			          <div>
+			            <img src="<?php echo $this->imgs_url; ?>banner03.jpg" alt="Slide 3" />
+			          </div>
+			        </div>
+			      </div>
+			    </article><!-- banner -->
+			    
+			    <article class="grid_12 clearfix fornecedores">
+				    <div class="slideshow" data-cycle-fx=carousel data-cycle-timeout=0 data-cycle-next="#next4"
+						    data-cycle-prev="#prev4" data-cycle-carousel-visible=1 data-allow-wrap=false>
+					    <img src="<?php echo $this->imgs_url; ?>santher.png">
+					    <img src="<?php echo $this->imgs_url; ?>santher.png">
+					    <img src="<?php echo $this->imgs_url; ?>santher.png">
+				    </div>
+
+				    <div class="center">
+				        <a href="#" class="navegar" id="prev4">Anterior</a>
+				        <a href="#" class="navegar" id="next4">Próximo</a>
+				    </div>
+			    </article>
+
+			  <article class="grid_12 clearfix sobre">
+			      <article class="grid_4 alpha">
+			        <h2><span>Nossos</span> Valores Empresariais</h2>
+			        <img src="<?php echo $this->imgs_url; ?>valores-empresariais.jpg" alt="">
+			        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo enim vitae eum sapiente id repudiandae saepe nisi voluptatem neque maiores.</p>
+			        <a class="link" href="a-empresa.php">Leia mais</a>
+			      </article>
+			        <article class="grid_4">
+			        <h2><span>Responsabilidade</span> Ambiental</h2>
+			        <img src="<?php echo $this->imgs_url; ?>responsabilidade_ambiental.jpg" alt="">
+			        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo enim vitae eum sapiente id repudiandae saepe nisi voluptatem neque maiores.</p>
+			        <a class="link" href="a-empresa.php">Leia mais</a>
+			      </article>
+			        <article class="grid_4 omega">
+			        <h2><span>Segmentação</span> de Mercado</h2>
+			        <img src="<?php echo $this->imgs_url; ?>segmentacao-mercado.jpg" alt="">
+			        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo enim vitae eum sapiente id repudiandae saepe nisi voluptatem neque maiores.</p>
+			        <a class="link" href="a-empresa.php">Leia mais</a>
+			      </article>
+			  </article>
+
+			</section><!--fim conteudo-->
+
+			<script type="text/javascript">
+			    var theInt = null;
+		        var $crosslink, $navthumb;
+		        var curclicked = 0;
+		        
+		        theInterval = function(cur){
+		            clearInterval(theInt);
+		            
+		            if( typeof cur != 'undefined' )
+		                curclicked = cur;
+		            
+		            $crosslink.removeClass("active-thumb");
+		            $navthumb.eq(curclicked).parent().addClass("active-thumb");
+		                $(".stripNav ul li a").eq(curclicked).trigger('click');
+		            
+		            theInt = setInterval(function(){
+		                $crosslink.removeClass("active-thumb");
+		                $navthumb.eq(curclicked).parent().addClass("active-thumb");
+		                $(".stripNav ul li a").eq(curclicked).trigger('click');
+		                curclicked++;
+		                if( 6 == curclicked )
+		                    curclicked = 0;
+		                
+		            }, 3000);
+		        };
+		        
+		        $(function(){
+		            
+		            $("#main-photo-slider").codaSlider();
+		            
+		            $navthumb = $(".nav-thumb");
+		            $crosslink = $(".cross-link");
+		            
+		            $navthumb
+		            .click(function() {
+		                var $this = $(this);
+		                theInterval($this.parent().attr('href').slice(1) - 1);
+		                return false;
+		            });
+		            
+		            theInterval();
+		        });
+			</script>

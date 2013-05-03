@@ -5,8 +5,7 @@ $relative_path = $this->relative_path;
 $absolute_path = $this->absolute_path;
 $public_path = $this->public_path;
 $absolute_url = $this->absolute_url;
-$css_url = $this->css_url;
-$js_url = $this->js_url;
+$imgs_url = $this->imgs_url;
 ?>
 
 <!DOCTYPE html>
@@ -18,25 +17,29 @@ $js_url = $this->js_url;
             <?php echo $this->page_title;?>
         </title>
         
-		<?php
-		echo $this->headLink()	->appendStylesheet($css_url . 'reset.css')
-								->appendStylesheet($css_url . 'estilo.css')
-								->appendStylesheet($css_url . 'slide.css')
-								->appendStylesheet($css_url . 'estilo.css');
-		
-		echo $this->headScript()->appendFile($js_url . 'jquery.js')
-								->appendFile($js_url . 'script.js')
-								->appendFile($js_url . 'html5.js')
-								->appendFile($js_url . 'jquery.easing.1.3.js')
-								->appendFile($js_url . 'slides.min.jquery.js');
-		?>
-        
+        <link rel="icon" href="<?php echo $imgs_url; ?>favicon.png" type="image/x-icon">
+		<link rel="shortcut icon" href="<?php echo $imgs_url; ?>favicon.png" type="image/x-icon">
         <meta name="keywords" content="" />
         <meta name="description" content="">
         <meta name="author" content="Diogo Carvalho de Farias">
         <meta name="contact" content="contato@diogoc.com.br"> 
         <meta name="robots" content="index,follow" />
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        
+		<?php
+		echo $this->headLink()	->appendStylesheet($css_url . 'reset.css')
+								->appendStylesheet($css_url . 'estilo.css')
+								->appendStylesheet($css_url . 'slide.css')
+								->appendStylesheet($css_url . 'estilo.css');
+		?>
+        
+        <script type="text/javascript" src="<?php echo $js_url;?>jquery.js"></script>
+        <script type="text/javascript" src="<?php echo $js_url;?>script.js"></script>
+        <script type="text/javascript" src="<?php echo $js_url;?>html5.js"></script>
+        <script type="text/javascript" src="<?php echo $js_url;?>jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="<?php echo $js_url;?>slides.min.jquery.js"></script>
+		
+		<?php echo $this->headScript(); ?>
 
         <script type="text/javascript">
             var wl = window.location;
@@ -45,7 +48,7 @@ $js_url = $this->js_url;
             $(function(){
                 $('#slides').slides({
                     preload: true,
-                    preloadImage: 'public/imgs/loading.gif',
+                    preloadImage: '<?php echo $imgs_url; ?>loading.gif',
                     play: 5000,
                     pause: 2500,
                     hoverPause: true
@@ -68,15 +71,16 @@ $js_url = $this->js_url;
                 <nav id="menu" class="grid_8 clearfix"><!--inicio menu-->
                     <ul>
                         <?php 
-                        $controller = $this->params['controller'];
-                        $action = $this->params['action'];
+                        $request = Zend_Controller_Front::getInstance()->getRequest();
+						$controller = $request->getControllerName();
+						$action = $request->getActionName();
                         $class_active = 'ativo';
                         ?>
                         <li>
-                        	<a href="empresa/" class="ativo">A Empresa</a>
+                        	<a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'empresa'), 'EmpresaRouter', true); ?>" class="<?php echo ($controller == 'index' && $action == 'empresa') ? $class_active : ''; ?>">A Empresa</a>
                         </li>
                         <li>
-                       		<a href="produtos" class="">Nossos Produtos</a>
+                       		<a href="<?php echo $this->url(array('controller' => 'produtos'), 'default', true); ?>" class="<?php echo ($controller == 'produtos') ? $class_active : ''; ?>">Nossos Produtos</a>
                             <ul class="sub_menu">
                                 <li><a href="">Químicos</a>
                                     <ul class="sub_menu_2">
@@ -109,7 +113,7 @@ $js_url = $this->js_url;
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'contato'), 'ContatoRouter', true); ?>" class="<?php echo ($controller == 'index' && $action == 'contato') ? $class_active : ''; ?>">
                                 Contato
                             </a>
                         </li>
@@ -119,18 +123,20 @@ $js_url = $this->js_url;
             </header><!--FIM TOPO-->
 
             <?php echo $this->layout()->content; ?>
+            
         </div> <!-- fim geral -->
+        
         <footer id="rodape"><!--INICIO RODAPE-->
             
             <div class="footer container_12">
                 <div class="grid_3 alpha">
                     <h3>Área Restrita</h3>
-                    <form action="">
+                    <form method="post" action="<?php echo $this->url(array('controller' => 'manager', 'action' => 'login'), null, true); ?>">
                         <div>
-                            <input type="text" name="login" placeholder="login">
+                            <input type="text" name="user_login" placeholder="usuário">
                         </div>
                         <div>
-                            <input type="text" name="senha" placeholder="senha">
+                            <input type="password" name="password" placeholder="senha">
                         </div>
                         <div class="envio">
                             <input type="submit" value="ok">
