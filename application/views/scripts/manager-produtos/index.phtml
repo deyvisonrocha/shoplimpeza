@@ -1,0 +1,58 @@
+<?php 
+$categorias = $this->categorias;
+?>
+			<div class="row-fluid">
+			    <div class="span2">
+			        <h3>Categorias</h3>
+			    </div>
+			
+			    <div class="span2 offset8">
+			    	<a href="<?php echo $this->url(array('action' => 'form'), 'ManagerCategoriasRouter', true);?>" class="btn btn-primary">
+			    		<i class="icon-plus icon-white"></i>
+			    		Adicionar
+			    	</a>
+			    </div>
+			    
+			    <table class="table table-bordered table-striped table-hover">
+			        <thead>
+				        <tr>
+				            <th>Nome</th>
+				            <th>Categoria Superior</th>
+				            <th>Ação</th>
+				        </tr>
+			        </thead>
+			        <tbody>
+<?php
+if (!empty($categorias)) {
+	foreach( $categorias as $categoria ) {
+?>
+				        <tr>
+				            <td>
+<?php echo $categoria['name'];?>
+				            </td>
+				            <td>
+<?php echo $categoria['parent_name']; ?>
+				            </td>
+				            <td>
+				            	<a href="<?php echo $this->url(array('action' => 'form', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true);?>">Editar</a> | 
+				            	<a href="<?php echo $this->url(array('action' => 'delete', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true); ?>">Excluir</a>
+				            </td>
+				        </tr>
+<?php
+	}
+}
+else {
+?>
+				        <tr>
+				            <td colspan="4">
+				                <div align="center">
+				                    Não há categorias cadastradas.
+				                </div>
+				            </td>
+				        </tr>
+<?php
+}
+?>
+			        </tbody>
+			    </table>
+			</div>

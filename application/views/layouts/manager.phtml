@@ -1,0 +1,118 @@
+<?php
+$css_url = $this->css_url;
+$js_url = $this->js_url;
+$relative_path = $this->relative_path;
+$absolute_path = $this->absolute_path;
+$public_path = $this->public_path;
+$absolute_url = $this->absolute_url;
+$imgs_url = $this->imgs_url;
+
+$auth = Zend_Auth::getInstance()->getIdentity();
+?>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Shopping Limpeza :: Área Administrativa</title>
+		
+		<link rel="icon" href="<?php echo $imgs_url; ?>favicon.png"
+			type="image/x-icon">
+		<link rel="shortcut icon" href="<?php echo $imgs_url; ?>favicon.png"
+			type="image/x-icon">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Deyvison Rocha">
+		<meta name="contact" content="deyvison@gmail.com">
+		<meta name="robots" content="nofollow" />
+		
+		<link type="text/css" media="screen" rel="stylesheet"
+			href="<?php echo $css_url . 'bootstrap.css'; ?>" />
+		
+		<!-- Le styles -->
+		<style type="text/css">
+			body {
+				padding-top: 60px;
+				padding-bottom: 40px;
+			}
+			.sidebar-nav {
+				padding: 9px 0;
+			}
+			
+			@media (max-width: 980px) {
+				/* Enable use of floated navbar text */
+				.navbar-text.pull-right {
+					float: none;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		</style>
+		<link type="text/css" media="screen" rel="stylesheet"
+			href="<?php echo $css_url . 'bootstrap-responsive.css'; ?>" />
+	</head>
+
+	<body>
+		
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+          			
+          			<a class="brand" href="<?php echo $this->url(array('controller' => 'manager'), 'default', true);?>">Shopping Limpeza</a>
+          			<div class="nav-collapse collapse">
+            			<p class="navbar-text pull-right">
+              				Logado como <?php echo $auth->user; ?>
+            			</p>
+						
+						<!-- <ul class="nav">
+              				<li class="active"><a href="#">Home</a></li>
+              				<li><a href="#about">About</a></li>
+              				<li><a href="#contact">Contact</a></li>
+            			</ul>-->
+          			</div><!--/.nav-collapse -->
+        		</div>
+      		</div>
+    	</div>
+    	
+    	<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="well sidebar-nav">
+						<ul class="nav nav-list">
+							<li class="nav-header">Cadastros</li>
+							<li><a href="<?php echo $this->url(array('action' => 'index'), 'ManagerCategoriasRouter', true); ?>">Categorias</a></li>
+							<li>
+								<a href="<?php echo $this->url(array('action' => 'index'), 'ManagerProdutosRouter', true); ?>">Produtos</a>
+							</li>
+							<li class="nav-header">Sistema</li>
+							<li>
+								<a href="<?php echo $this->url(array('controller' => 'manager', 'action' => 'alterar-senha'), 'default', true); ?>">Alterar Senha</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->url(array('controller' => 'manager', 'action' => 'logout'), 'default', true); ?>">Sair</a>
+							</li>
+						</ul>
+					</div><!--/.well -->
+				</div><!--/span-->
+				<div class="span9">
+					<?php echo $this->flashMessages(); ?>
+					
+					<?php echo $this->layout()->content; ?>
+				</div><!--/span-->
+			</div><!--/row-->
+		
+			<hr>
+		
+			<footer>
+				<p>Desenvolvido por Deyvison Rocha</p>
+				<p>&copy; Shopping Limpeza 2013</p>
+			</footer>
+		
+		</div><!--/.fluid-container-->
+	</body>
+	<script type="text/javascript" src="<?php echo $js_url;?>jquery.js"></script>
+	<script type="text/javascript" src="<?php echo $js_url;?>bootstrap.js"></script>
+</html>

@@ -1,0 +1,40 @@
+				
+				<section>
+					<?php echo $this->flashMessages(); ?>
+				
+					<h3>Alterar Senha</h3>
+				
+					<form class="form-horizontal" action="<?php echo $this->url(array('controller' => 'manager', 'action' => 'alterar-senha'), 'default', true);?>" method="post">
+				
+						<div class="control-group">
+							<label class="control-label" for="inputOldPassword">Senha Antiga</label>
+							<div class="controls">
+								<input type="password" class="input-xlarge" id="inputOldPassword"
+									placeholder="" name="password_old">
+							</div>
+						</div>
+						<hr>
+						<div class="control-group">
+							<label class="control-label" for="inputNewPassword">Senha Nova</label>
+							<div class="controls">
+								<input type="password" class="input-xlarge" id="inputNewPassword"
+									placeholder="Pelo menos de 6 caractéres" name="password_new">
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label" for="inputNewPassword">Digite Novamente</label>
+							<div class="controls">
+								<input type="password" class="input-xlarge" id="inputNewPassword"
+									placeholder="Pelo menos de 6 caractéres" name="password_new_again">
+							</div>
+						</div>
+				
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-primary">Alterar</button>
+							</div>
+						</div>
+					</form>
+				</section>
+				<!-- /section -->

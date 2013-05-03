@@ -1,0 +1,69 @@
+<?php
+$categorias_select = $this->categorias_select;
+$categoria = $this->categoria;
+
+$action = 'add';
+$title = 'Adicionar uma Categoria';
+$id = '';
+$name = '';
+$parent_id = '';
+
+if (!empty($categoria)) { 
+	$action = 'edit';
+	$title = 'Editar uma Categoria';
+	$id = $categoria['id'];
+	$name = $categoria['name'];
+	$parent_id = $categoria['parent_id'];
+}
+
+?>
+<form class="form-horizontal" action="<?php echo $this->url(array('action' => $action), 'ManagerCategoriasRouter', true); ?>" method="POST">
+	<input type="hidden" name="categoria_id" value="<?php echo $id; ?>"/>
+	<fieldset>
+		<div id="legend">
+			<legend class=""><?php echo $title; ?></legend>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="username">Nome</label>
+			<div class="controls">
+				<input type="text" id="name" name="name" placeholder=""
+					class="input-xlarge" value="<?php echo $name; ?>">
+			</div>
+		</div>
+
+<?php 
+if (!empty($categorias_select)) {
+?>
+		<div class="control-group">
+			<label class="control-label" for="email">Categoria Superior</label>
+			<div class="controls">
+				<select name="parent_id">
+					<option value="0">Selecione uma Categoria</option>
+<?php 
+	foreach ($categorias_select as $categoria_select):
+		$selected = '';
+		if ($categoria_select['id'] == $parent_id) {
+			$selected = 'selected="selected"';
+		}
+		
+		if ($id != $categoria_select['id']) {
+?>
+					<option value="<?php echo $categoria_select['id']; ?>" <?php echo $selected?>><?php echo $categoria_select['name']; ?></option>
+<?php 
+		}
+	endforeach;
+?>
+				</select>
+			</div>
+		</div>
+<?php 
+}
+?>
+
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Salvar</button>
+		</div>
+	</fieldset>
+</form>
+
+
