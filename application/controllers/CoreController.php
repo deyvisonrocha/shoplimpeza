@@ -17,6 +17,10 @@ class CoreController extends Zend_Controller_Action
 	
 	protected $_js_url = null;
 	
+	protected $_imgs_url = null;
+	
+	protected $_flashMessenger;
+	
 	public function init()
 	{
 		parent::init();
@@ -39,6 +43,13 @@ class CoreController extends Zend_Controller_Action
 		
 		$this->_js_url = 'http://' . $http_host . $this->_public_path . 'js/';
 		
+		$this->_imgs_url = 'http://' . $http_host . $this->_public_path . 'imgs/';
+		
+		$this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
+		$this->_redirector = $this->_helper->getHelper('Redirector');
+		$this->_view = $this->_helper->getHelper('ViewRenderer');
+		$this->view->setEscape(array($this, 'escape'));
+		
 		$this->view->assign('page_title', $this->_page_title);
 		$this->view->assign('relative_path', $this->_relative_path);
 		$this->view->assign('absolute_path', $this->_absolute_path);
@@ -46,6 +57,23 @@ class CoreController extends Zend_Controller_Action
 		$this->view->assign('absolute_url', $this->_absolute_url);
 		$this->view->assign('css_url', $this->_css_url);
 		$this->view->assign('js_url', $this->_js_url);
+		$this->view->assign('imgs_url', $this->_imgs_url);
 	}
 	
+	public static function clearSession()
+	{
+		$user_namespace = new Zend_Session_Namespace('user');
+		$user_namespace->unsetAll();
+	}
+	
+	public function getSessionUser()
+	{
+		$session_namespace = Zend_Session::namespaceGet('user');
+		
+		if (!empty($session_namespace)) {
+			return $session_namespace['session_user'];
+		}
+		
+		return false;
+	}
 }
