@@ -11,9 +11,12 @@ class ProdutosModel extends CoreModel
 	 */
 	public function listAll($filters)
 	{
+		$categoriasModel = new CategoriasModel();
+		
 		$select = new Zend_Db_Select($this->getAdapter());
-			
-		$select->from(array('p' => $this->getName()), array('c.*'));
+		
+		$select->from(array('p' => $this->getName()), array('p.*'));
+		$select->joinLeft(array('c' => $categoriasModel->getName()), 'p.category_id = c.id', array('category_name' => 'c.name'));
 	
 		$this->setFilter($select, $filters);
 	
@@ -40,8 +43,8 @@ class ProdutosModel extends CoreModel
 	{
 		$select = new Zend_Db_Select($this->getAdapter());
 			
-		$select->from(array('c' => $this->getName()), array('c.*'));
-		$select->where('c.id = ?', $id);
+		$select->from(array('p' => $this->getName()), array('p.*'));
+		$select->where('p.id = ?', $id);
 	
 		$result = $this->getAdapter()->fetchRow($select);
 	
@@ -50,6 +53,7 @@ class ProdutosModel extends CoreModel
 	
 	public function add($params)
 	{
+		$params['created_at'] = date('now');
 		$id = parent::insert($params);
 		
 		return $id;
@@ -68,6 +72,4 @@ class ProdutosModel extends CoreModel
 		
 		$rows = parent::delete('id = ' . $id);
 	}
-	
-	
 }

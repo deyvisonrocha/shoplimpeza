@@ -1,30 +1,39 @@
 <?php
 $categorias_select = $this->categorias_select;
-$categoria = $this->categoria;
+$produto = $this->produto;
+$produto_versoes = $this->produto_versoes;
 
 $action = 'add';
-$title = 'Adicionar uma Categoria';
+$title = 'Adicionar um Produto';
 $id = '';
+$category_id = '';
 $name = '';
-$parent_id = '';
+$description_short = '';
+$description = '';
+$image = '';
+$main = '';
 
-if (!empty($categoria)) { 
+if (!empty($produto)) { 
 	$action = 'edit';
-	$title = 'Editar uma Categoria';
-	$id = $categoria['id'];
-	$name = $categoria['name'];
-	$parent_id = $categoria['parent_id'];
+	$title = 'Editar um Produto';
+	$id = $produto['id'];
+	$category_id = $produto['category_id'];
+	$name = $produto['name'];
+	$description_short = $produto['description_short'];
+	$description = $produto['description'];
+	$image = $produto['image'];
+	$main = $produto['main'];
 }
 
 ?>
-<form class="form-horizontal" action="<?php echo $this->url(array('action' => $action), 'ManagerCategoriasRouter', true); ?>" method="POST">
-	<input type="hidden" name="categoria_id" value="<?php echo $id; ?>"/>
+<form class="form-horizontal" enctype="multipart/form-data" action="<?php echo $this->url(array('action' => $action), 'ManagerProdutosRouter', true); ?>" method="POST">
+	<input type="hidden" name="id" value="<?php echo $id; ?>"/>
 	<fieldset>
 		<div id="legend">
 			<legend class=""><?php echo $title; ?></legend>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="username">Nome</label>
+			<label class="control-label" for="name">Nome</label>
 			<div class="controls">
 				<input type="text" id="name" name="name" placeholder=""
 					class="input-xlarge" value="<?php echo $name; ?>">
@@ -35,14 +44,14 @@ if (!empty($categoria)) {
 if (!empty($categorias_select)) {
 ?>
 		<div class="control-group">
-			<label class="control-label" for="email">Categoria Superior</label>
+			<label class="control-label" for="category_id">Categoria</label>
 			<div class="controls">
-				<select name="parent_id">
+				<select name="category_id">
 					<option value="0">Selecione uma Categoria</option>
 <?php 
 	foreach ($categorias_select as $categoria_select):
 		$selected = '';
-		if ($categoria_select['id'] == $parent_id) {
+		if ($categoria_select['id'] == $category_id) {
 			$selected = 'selected="selected"';
 		}
 		
@@ -60,6 +69,103 @@ if (!empty($categorias_select)) {
 }
 ?>
 
+		<div class="control-group">
+			<label class="control-label" for="description_short">Breve Descrição</label>
+			<div class="controls">
+				<input type="text" id="description_short" name="description_short" placeholder=""
+					class="input-xlarge" value="<?php echo $description_short; ?>">
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="description">Descrição Completa</label>
+			<div class="controls">
+				<textarea rows="6" name="description" id="description"><?php echo $description; ?></textarea>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="image">Imagem</label>
+			<div class="controls">
+				<input type="file" name="image"/>
+				<p></p>
+				<img src="/" width="140" height="140" class="img-polaroid">
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="main">Principal?</label>
+			<div class="controls">
+				<input type="checkbox" name="main" value="1" <?php echo (!empty($main) ? 'checked="checked"' : '');?> />
+				Ao definir o item como principal ele será sempre o primeiro quando entrar na categoria do mesmo
+			</div>
+		</div>
+		
+		<hr>
+		<div id="legend">
+			<legend class="">
+				Versões do Produto
+			</legend>
+		</div>
+		
+    	<a href="#" class="btn btn-primary pull-right add-product_versions">
+    		<i class="icon-plus icon-white"></i>
+    		Adicionar Versão
+    	</a>
+    	
+    	<br/><br/>
+	    
+		<table class="table table-bordered">
+			<thead>
+		        <tr>
+		        	<th>Nome</th>
+		            <th>Fragancia</th>
+		            <th>Cor</th>
+		            <th>Diluição</th>
+		            <th>Embalagem</th>
+		        </tr>
+	        </thead>
+	        <tbody class="product_versions">
+<?php 
+if (!empty($produto_versoes)) {
+	$indice = 0;
+	foreach ($produto_versoes as $produto_versao) {
+?>
+				<tr>
+	        		<td>
+	        			<input type="text" id="pv_name" name="product_versions[<?php echo $indice; ?>][pv_name]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['pv_name']; ?>"/>
+	        		</td>
+	        		<td>
+	        			<input type="text" id="pv_fragrance" name="product_versions[<?php echo $indice; ?>][pv_fragrance]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['pv_fragrance']; ?>"/>
+	        		</td>
+	        		<td>
+	        			<input type="text" id="pv_color" name="product_versions[<?php echo $indice; ?>][pv_color]" placeholder=""
+							class="input-small" value="<?php echo $produto_versao['pv_color']; ?>"/>
+	        		</td>
+	        		<td>
+	        			<input type="text" id="pv_dilution" name="product_versions[<?php echo $indice; ?>][pv_dilution]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['pv_dilution']; ?>"/>
+	        		</td>
+	        		<td>
+	        			<input type="text" id="pv_packing" name="product_versions[<?php echo $indice; ?>][pv_packing]" placeholder=""
+							class="input-small" value="<?php echo $produto_versao['pv_packing']; ?>"/>
+	        		</td>
+	        		<td>
+	        			<a href="#" class="btn btn-mini btn-danger remove-product_version">
+				    		<i class="icon-remove icon-white"></i>
+				    	</a>
+	        		</td>
+	        	</tr>
+<?php
+		$indice++;
+	}
+}
+?>
+	        </tbody>
+		</table>
+		
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">Salvar</button>
 		</div>
@@ -67,3 +173,36 @@ if (!empty($categorias_select)) {
 </form>
 
 
+<script type="text/javascript">
+	$(function () {
+		$(".add-product_versions").off();
+		$(".add-product_versions").on('click', function () {
+			var tbody = $(".product_versions");
+			var lines = tbody.children().length;
+			var newline = tbody.children().clone().get(0);
+
+			$(newline).find('input').each(function () {
+				var value_atual = $(this).attr('name');
+				value_atual = value_atual.split('[0]');
+
+				var new_value = value_atual[0] + '[' + lines + ']' + value_atual[1];
+				$(this).attr('name', new_value);
+				$(this).val('');
+			});
+			
+			tbody.append(newline);
+
+			return false;
+		});
+
+		$(document).off('click', '.remove-product_version');
+		$(document).on('click', '.remove-product_version', function () {
+			var elemento = $(this).parents().get(1);
+
+			elemento.remove();
+
+			return false;
+		});
+		
+	});
+</script>

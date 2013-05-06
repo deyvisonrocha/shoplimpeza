@@ -1,13 +1,13 @@
 <?php 
-$categorias = $this->categorias;
+$produtos = $this->produtos;
 ?>
 			<div class="row-fluid">
 			    <div class="span2">
-			        <h3>Categorias</h3>
+			        <h3>Produtos</h3>
 			    </div>
 			
 			    <div class="span2 offset8">
-			    	<a href="<?php echo $this->url(array('action' => 'form'), 'ManagerCategoriasRouter', true);?>" class="btn btn-primary">
+			    	<a href="<?php echo $this->url(array('action' => 'form'), 'ManagerProdutosRouter', true);?>" class="btn btn-primary">
 			    		<i class="icon-plus icon-white"></i>
 			    		Adicionar
 			    	</a>
@@ -17,25 +17,37 @@ $categorias = $this->categorias;
 			        <thead>
 				        <tr>
 				            <th>Nome</th>
-				            <th>Categoria Superior</th>
-				            <th>Ação</th>
+				            <th>Categoria</th>
+				            <th>Descrição</th>
+				            <th width="10%"></th>
 				        </tr>
 			        </thead>
 			        <tbody>
 <?php
-if (!empty($categorias)) {
-	foreach( $categorias as $categoria ) {
+if (!empty($produtos)) {
+	foreach( $produtos as $produto ) {
 ?>
 				        <tr>
 				            <td>
-<?php echo $categoria['name'];?>
+<?php echo $produto['name'];?>
 				            </td>
 				            <td>
-<?php echo $categoria['parent_name']; ?>
+<?php echo $produto['category_name']; ?>
 				            </td>
 				            <td>
-				            	<a href="<?php echo $this->url(array('action' => 'form', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true);?>">Editar</a> | 
-				            	<a href="<?php echo $this->url(array('action' => 'delete', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true); ?>">Excluir</a>
+<?php echo $produto['description_short']; ?>
+				            </td>
+				            <td>
+				            	<div class="btn-group">
+									<button class="btn">Ação</button>
+									<button class="btn dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo $this->url(array('action' => 'form', 'id' => $produto['id']), 'ManagerProdutosRouter', true);?>">Editar</a></li>
+										<li><a href="<?php echo $this->url(array('action' => 'delete', 'id' => $produto['id']), 'ManagerProdutosRouter', true); ?>">Excluir</a></li>
+								  	</ul>
+								</div>
 				            </td>
 				        </tr>
 <?php
@@ -46,7 +58,7 @@ else {
 				        <tr>
 				            <td colspan="4">
 				                <div align="center">
-				                    Não há categorias cadastradas.
+				                    Não há produtos cadastradas.
 				                </div>
 				            </td>
 				        </tr>
