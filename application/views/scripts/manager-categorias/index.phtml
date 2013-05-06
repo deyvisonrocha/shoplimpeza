@@ -18,7 +18,7 @@ $categorias = $this->categorias;
 				        <tr>
 				            <th>Nome</th>
 				            <th>Categoria Superior</th>
-				            <th>Ação</th>
+				            <th width="18%"></th>
 				        </tr>
 			        </thead>
 			        <tbody>
@@ -34,8 +34,16 @@ if (!empty($categorias)) {
 <?php echo $categoria['parent_name']; ?>
 				            </td>
 				            <td>
-				            	<a href="<?php echo $this->url(array('action' => 'form', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true);?>">Editar</a> | 
-				            	<a href="<?php echo $this->url(array('action' => 'delete', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true); ?>">Excluir</a>
+				           		<div class="btn-group">
+									<button class="btn">Ação</button>
+									<button class="btn dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo $this->url(array('action' => 'form', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true);?>">Editar</a></li>
+										<li><a href="<?php echo $this->url(array('action' => 'delete', 'id' => $categoria['id']), 'ManagerCategoriasRouter', true); ?>">Excluir</a></li>
+								  	</ul>
+								</div>
 				            </td>
 				        </tr>
 <?php
