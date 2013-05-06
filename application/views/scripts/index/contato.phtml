@@ -4,9 +4,9 @@
                     <div class="grid_4 alpha box">
                         <h2 class="titulo">Entre em <span>Contato</span></h2>
                         
-                        <div id="messageContact" style="display:none;"></div>
+                        <?php echo $this->flashMessages(false); ?>
 
-                        <form id="contato" action="">
+                        <form id="contato" action="<?php echo $this->url(array('action' => 'contato'), 'ContatoRouter', true); ?>" method="post">
                             <div>
                                 <input type="text" name="nome" placeholder="nome">
                             </div>
@@ -85,7 +85,7 @@
                                 required: "Digite a sua mensagem",
                                 minLength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
                             }
-                        },
+                        }/*,
                         submitHandler: function( form ) {
                             var dados = $( form ).serialize();
   
@@ -105,7 +105,7 @@
                             });
 
                             return false;
-                        }
+                        }*/
                     });
                 });                
             </script>

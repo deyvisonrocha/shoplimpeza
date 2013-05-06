@@ -26,6 +26,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		self::setupRouter();
 		self::setupLocale();
 		self::setupLayout();
+		self::setupEmail();
 	}
 
 	private function setupEnvironment()
@@ -139,5 +140,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->_layout->setLayoutPath(APPLICATION_PATH . '/views/layouts');
 		
 		$this->_layout->enableLayout();
+	}
+	
+	private function setupEmail()
+	{
+		$config_email = $this->_registry->config->email->server;
+		
+		$smtp = new Zend_Mail_Transport_Smtp($config_email->host, array(
+				'ssl' => $config_email->security,
+				'port' => $config_email->port,
+				'auth' => 'login',
+				'username' => $config_email->user,
+				'password' => $config_email->pass
+		));
+		
+		Zend_Registry::set('transportMail', $smtp);
 	}
 }
