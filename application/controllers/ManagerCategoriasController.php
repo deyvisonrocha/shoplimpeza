@@ -33,7 +33,7 @@ class ManagerCategoriasController extends ManagerController
 			
 			$id = $categoriasModel->add($data);
 			
-			$flashMessages['success'] = "Categoria adicionada com sucesso!" . $e->getTraceAsString();
+			$flashMessages['success'] = "Categoria adicionada com sucesso!";
 		} catch (Zend_Exception $e) {
 			$flashMessages['error'] = "Ocorreu um erro: " . $e->getTraceAsString();
 		}
