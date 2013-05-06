@@ -1,21 +1,28 @@
 <?php 
 class Zend_View_Helper_FlashMessages extends Zend_View_Helper_Abstract
 {
-    public function flashMessages()
+    public function flashMessages($manager = true)
     {
         $messages = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger')->getMessages();
-        $output = '';
         
         if (!empty($messages)) {
-            $output .= '<div class="row-fluid" id="messages">';
+        	$output = '';
+        	
+        	if ($manager) {
+            	$output .= '<div class="row-fluid" id="messages">';
+        	}
             foreach ($messages as $message) {
             	$output .= '<div class="alert alert-'. key($message) . '">';
                 $output .= current($message);
                 $output .= '</div>';
             }
-            $output .= '</div>';
+            if ($manager) {
+            	$output .= '</div>';
+            }
+            
+            return $output;
         }
         
-        return $output;
+        return false;
     }
 }
