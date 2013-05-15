@@ -1,0 +1,49 @@
+<?php 
+$categorias = $this->categorias;
+$produtos = $this->produtos;
+?>
+			<section id="produtos" class="clearfix conteudo">
+
+                <article class="grid_12">
+                	<div class="grid_4 alpha box menu_produtos">
+                		<h2 class="titulo"><span>Nossos</span> Produtos</h2>
+                		
+                		<div>
+<?php
+//Zend_Debug::dump($produtos);exit;
+foreach ($categorias as $categoria):
+	$categoria_id = $categoria['id'];
+	$categoria_name = $categoria['name'];
+	$category = Common::removeSpecialChars($categoria_name);
+?>
+							<h3><?php echo $categoria_name; ?></h3>
+
+<?php
+	if (!empty($produtos)):
+?>
+							<ul>
+<?php 	
+		foreach ($produtos as $produto):
+			$produto_id = $produto['id'];
+			$produto_name = $produto['name'];
+			$produto_categoria_id = $produto['category_id'];
+			$product = Common::removeSpecialChars($produto_name);
+			
+			if ($categoria_id == $produto_categoria_id):
+?>
+								<li><a href="<?php echo $this->url(array('category' => $category, 'product' => $product), 'ProdutosRouter', true);?>"><?php echo $produto_name; ?></a></li>
+<?php 
+			endif;
+		endforeach;
+?>
+							</ul>
+<?php
+	endif;
+endforeach;
+?>
+						</div>
+                	</div>
+                	
+                </article>
+
+            </section>
