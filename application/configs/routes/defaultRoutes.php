@@ -19,6 +19,13 @@ $route = new Zend_Controller_Router_Route(
 );
 $router->addRoute('ContatoRouter', $route);
 
+$route = new Zend_Controller_Router_Route(
+		'/produtos/:category/:product',
+		array('module' => 'default', 'controller' => 'produtos', 'action' => 'index', 'category' => ':category', 'product' => ':product')
+);
+$router->addRoute('ProdutosRouter', $route);
+
+
 /**
  * Área Administrativa
  */
