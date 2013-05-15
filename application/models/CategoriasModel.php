@@ -9,7 +9,7 @@ class CategoriasModel extends CoreModel
 	 * 
 	 * @param array $filters
 	 */
-	public function listAll($filters)
+	public function listAll($filters = array())
 	{	
 		$select = new Zend_Db_Select($this->getAdapter());
 			
@@ -74,6 +74,7 @@ class CategoriasModel extends CoreModel
 	
 	public function edit($params, $id)
 	{
+		$id = $this->getAdapter()->quote($id);
 		$rows = parent::update($params, 'id = ' . $id);
 		
 		return $rows;

@@ -9,7 +9,7 @@ class ProdutosModel extends CoreModel
 	 *
 	 * @param array $filters
 	 */
-	public function listAll($filters)
+	public function listAll($filters = array())
 	{
 		$categoriasModel = new CategoriasModel();
 		
