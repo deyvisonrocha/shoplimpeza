@@ -1,6 +1,8 @@
 <?php 
 $produtos = $this->produtos;
 ?>
+			<link type="text/css" media="screen" rel="stylesheet"
+				href="<?php echo $this->css_url; ?>sections/manager-produtos/index.css" />
 			<div class="row-fluid">
 			    <div class="span2">
 			        <h3>Produtos</h3>
@@ -19,7 +21,7 @@ $produtos = $this->produtos;
 				            <th>Nome</th>
 				            <th>Categoria</th>
 				            <th>Descrição</th>
-				            <th width="10%"></th>
+				            <th width="5%"></th>
 				        </tr>
 			        </thead>
 			        <tbody>
@@ -39,8 +41,7 @@ if (!empty($produtos)) {
 				            </td>
 				            <td>
 				            	<div class="btn-group">
-									<button class="btn">Ação</button>
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
+									<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">

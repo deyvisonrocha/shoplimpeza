@@ -1,6 +1,8 @@
 <?php 
 $categorias = $this->categorias;
 ?>
+			<link type="text/css" media="screen" rel="stylesheet"
+				href="<?php echo $this->css_url; ?>sections/manager-categorias/index.css" />
 			<div class="row-fluid">
 			    <div class="span2">
 			        <h3>Categorias</h3>
@@ -18,7 +20,7 @@ $categorias = $this->categorias;
 				        <tr>
 				            <th>Nome</th>
 				            <th>Categoria Superior</th>
-				            <th width="18%"></th>
+				            <th width="5%"></th>
 				        </tr>
 			        </thead>
 			        <tbody>
@@ -35,8 +37,7 @@ if (!empty($categorias)) {
 				            </td>
 				            <td>
 				           		<div class="btn-group">
-									<button class="btn">Ação</button>
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
+									<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
