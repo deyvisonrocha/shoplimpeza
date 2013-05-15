@@ -10,8 +10,7 @@ class ProdutosVersoesModel extends CoreModel
 	{
 		$select = new Zend_Db_Select($this->getAdapter());
 			
-		$select->from(array('pv' => $this->getName()), array('pv_id' => 'pv.id', 'pv_name' => 'pv.name', 'pv_fragrance' => 'pv.fragrance',
-				'pv_color' => 'pv.color', 'pv_dilution' => 'pv.dilution', 'pv_packing' => 'pv.packing'));
+		$select->from(array('pv' => $this->getName()), array('pv.*'));
 		$select->where('pv.product_id = ?', $product_id);
 	
 		$result = $this->getAdapter()->fetchAll($select);

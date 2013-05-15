@@ -133,24 +133,24 @@ if (!empty($produto_versoes)) {
 ?>
 				<tr>
 	        		<td>
-	        			<input type="text" id="pv_name" name="product_versions[<?php echo $indice; ?>][pv_name]" placeholder=""
-							class="input-medium" value="<?php echo $produto_versao['pv_name']; ?>"/>
+	        			<input type="text" name="product_versions[<?php echo $indice; ?>][name]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['name']; ?>"/>
 	        		</td>
 	        		<td>
-	        			<input type="text" id="pv_fragrance" name="product_versions[<?php echo $indice; ?>][pv_fragrance]" placeholder=""
-							class="input-medium" value="<?php echo $produto_versao['pv_fragrance']; ?>"/>
+	        			<input type="text" name="product_versions[<?php echo $indice; ?>][fragrance]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['fragrance']; ?>"/>
 	        		</td>
 	        		<td>
-	        			<input type="text" id="pv_color" name="product_versions[<?php echo $indice; ?>][pv_color]" placeholder=""
-							class="input-small" value="<?php echo $produto_versao['pv_color']; ?>"/>
+	        			<input type="text" name="product_versions[<?php echo $indice; ?>][color]" placeholder=""
+							class="input-small" value="<?php echo $produto_versao['color']; ?>"/>
 	        		</td>
 	        		<td>
-	        			<input type="text" id="pv_dilution" name="product_versions[<?php echo $indice; ?>][pv_dilution]" placeholder=""
-							class="input-medium" value="<?php echo $produto_versao['pv_dilution']; ?>"/>
+	        			<input type="text" name="product_versions[<?php echo $indice; ?>][dilution]" placeholder=""
+							class="input-medium" value="<?php echo $produto_versao['dilution']; ?>"/>
 	        		</td>
 	        		<td>
-	        			<input type="text" id="pv_packing" name="product_versions[<?php echo $indice; ?>][pv_packing]" placeholder=""
-							class="input-small" value="<?php echo $produto_versao['pv_packing']; ?>"/>
+	        			<input type="text" name="product_versions[<?php echo $indice; ?>][packing]" placeholder=""
+							class="input-small" value="<?php echo $produto_versao['packing']; ?>"/>
 	        		</td>
 	        		<td>
 	        			<a href="#" class="btn btn-mini btn-danger remove-product_version">
@@ -199,7 +199,14 @@ if (!empty($produto_versoes)) {
 		$(document).on('click', '.remove-product_version', function () {
 			var elemento = $(this).parents().get(1);
 
-			elemento.remove();
+			if ($(this).parents().length == 11) {
+				$(elemento).find('input').each(function () {
+					$(this).val('');
+				});
+			}
+			else {
+				elemento.remove();
+			}
 
 			return false;
 		});

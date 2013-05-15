@@ -122,21 +122,34 @@ class ManagerProdutosController extends ManagerController
 			if (! empty($product_versions)) {
 				$product_versions_exists = $produtosVersoesModel->getAllByProduct($id);
 				
+				$product_versions_new = array();
+				
 				foreach ($product_versions as $product_version) {
 					$product_version = array_filter($product_version);
 					
 					if (! empty($product_version)) {
 						$data = array();
+						//$data['id'] = NULL;
 						$data['product_id'] = $id;
-						$data['name'] = $product_version['pv_name'];
-						$data['fragrance'] = $product_version['pv_fragrance'];
-						$data['color'] = $product_version['pv_color'];
-						$data['dilution'] = $product_version['pv_dilution'];
-						$data['packing'] = $product_version['pv_packing'];
+						$data['name'] = $product_version['name'];
+						$data['fragrance'] = $product_version['fragrance'];
+						$data['color'] = $product_version['color'];
+						$data['dilution'] = $product_version['dilution'];
+						$data['packing'] = $product_version['packing'];
 						
-						if ($product_versions_exists) {}
-						
-						$produtosVersoesModel->edit($data);
+						$product_versions_new[] = $data;
+					}
+				}
+				
+				for ($i=0; $i < count($product_versions_exists); $i++) {
+					$diff = array_diff($product_versions_new[$i], $product_versions_exists[$i]);
+					
+					if (isset($diff) && key($diff) == 'id' && count($diff) === 1) {
+						unset($diff);
+					}
+					else {
+						$id = $product_versions_exists[$i]['id'];
+						$produtosVersoesModel->edit($diff, $id);
 					}
 				}
 			}
@@ -191,11 +204,11 @@ class ManagerProdutosController extends ManagerController
 		if (empty($produto_versoes)) {
 			$produto_versoes = array(
 				array(
-					'pv_name' => '',
-					'pv_fragrance' => '',
-					'pv_color' => '',
-					'pv_dilution' => '',
-					'pv_packing' => ''
+					'name' => '',
+					'fragrance' => '',
+					'color' => '',
+					'dilution' => '',
+					'packing' => ''
 				)
 			);
 		}
