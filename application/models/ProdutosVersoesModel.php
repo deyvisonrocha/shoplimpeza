@@ -19,6 +19,13 @@ class ProdutosVersoesModel extends CoreModel
 		return $result;
 	}
 	
+	public function deleteAllByProduct($product_id)
+	{
+		$id = $this->getAdapter()->quote($product_id);
+	
+		$rows = parent::delete('product_id = ' . $id);
+	}
+	
 	public function get($id)
 	{
 		$select = new Zend_Db_Select($this->getAdapter());
