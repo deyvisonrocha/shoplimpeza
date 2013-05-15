@@ -27,7 +27,7 @@ if (!empty($produto)) {
 
 ?>
 <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo $this->url(array('action' => $action), 'ManagerProdutosRouter', true); ?>" method="POST">
-	<input type="hidden" name="id" value="<?php echo $id; ?>"/>
+	<input type="hidden" name="product_id" value="<?php echo $id; ?>"/>
 	<fieldset>
 		<div id="legend">
 			<legend class=""><?php echo $title; ?></legend>
