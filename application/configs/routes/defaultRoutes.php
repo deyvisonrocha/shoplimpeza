@@ -20,8 +20,8 @@ $route = new Zend_Controller_Router_Route(
 $router->addRoute('ContatoRouter', $route);
 
 $route = new Zend_Controller_Router_Route(
-		'/produtos/:category/:product',
-		array('module' => 'default', 'controller' => 'produtos', 'action' => 'index', 'category' => ':category', 'product' => ':product')
+		'/produtos/:category/:product/:id',
+		array('module' => 'default', 'controller' => 'produtos', 'action' => 'index', 'category' => ':category', 'product' => ':product', 'id' => ':id')
 );
 $router->addRoute('ProdutosRouter', $route);
 
