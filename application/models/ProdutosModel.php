@@ -51,6 +51,18 @@ class ProdutosModel extends CoreModel
 		return $result;
 	}
 	
+	public function getMain()
+	{
+		$select = new Zend_Db_Select($this->getAdapter());
+			
+		$select->from(array('p' => $this->getName()), array('p.*'));
+		$select->where('p.main = 1');
+	
+		$result = $this->getAdapter()->fetchRow($select);
+	
+		return $result;
+	}
+	
 	public function add($params)
 	{
 		$params['created_at'] = date('now');

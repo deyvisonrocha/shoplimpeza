@@ -10,7 +10,6 @@ $produtos = $this->produtos;
                 		
                 		<div>
 <?php
-//Zend_Debug::dump($produtos);exit;
 foreach ($categorias as $categoria):
 	$categoria_id = $categoria['id'];
 	$categoria_name = $categoria['name'];
@@ -31,7 +30,7 @@ foreach ($categorias as $categoria):
 			
 			if ($categoria_id == $produto_categoria_id):
 ?>
-								<li><a href="<?php echo $this->url(array('category' => $category, 'product' => $product), 'ProdutosRouter', true);?>"><?php echo $produto_name; ?></a></li>
+								<li><a href="<?php echo $this->url(array('category' => $category, 'product' => $product, 'id' => $produto_id), 'ProdutosRouter', true);?>"><?php echo $produto_name; ?></a></li>
 <?php 
 			endif;
 		endforeach;
@@ -41,6 +40,75 @@ foreach ($categorias as $categoria):
 	endif;
 endforeach;
 ?>
+						</div>
+                	</div>
+
+<?php 
+$produto = $this->produto;
+?>
+                	<div class="grid_8 omega">
+                		<ul class="clearfix box titulo breadcrumbs">
+							<li><a href="<?php echo $this->relative_path; ?>" title="Voltar a Página Inicial">Home</a> > </li>
+							<li><a href="#">Nossos Produtos</a> > </li>
+							<li class="produto"><?php echo $produto['categoria']; ?></li>
+						</ul>
+						
+						<h3 class="nome_prod"><?php echo $produto['name']; ?></h3>
+						
+						<table width="100%">
+							<tbody>
+								<tr class="azul">
+									<td>Versões Disponíveis</td>
+									<td>Aroma</td>
+									<td>Cor</td>
+									<td colspan="2">Informações Técnicas</td>
+								</tr>
+<?php 
+$versoes = $produto['versoes'];
+
+if (!empty($versoes)):
+	foreach ($versoes as $versao):
+?>
+								<tr>
+									<td><?php echo $versao['name']?></td>
+									<td><?php echo $versao['fragrance']?></td>
+									<td><?php echo $versao['color']?></td>
+									<td><?php echo $versao['dilution']; ?></td>
+									<td><?php echo $versao['packing']; ?></td>
+								</tr>
+<?php 
+	endforeach;
+endif;
+?>
+							</tbody>
+						</table>
+						
+						<div class="grid_8 alpha omega caracteristicas">
+							<div class="grid_5 alpha">
+								<h3>Características</h3>
+								<ul>
+<?php 
+$caracteristicas = $produto['caracteristicas'];
+if (!empty($caracteristicas)):
+	foreach ($caracteristicas as $caracteristica):
+?>
+									<li><?php echo $caracteristica['description']?></li>
+<?php 
+	endforeach;
+endif;
+?>
+								</ul>
+							</div>
+							<div class="grid_3 omega">
+<?php 
+$imagem = $produto['image'];
+if (!empty($imagem)):
+?>
+								<img src="<?php echo $this->imgs_url;?>produtos/<?php echo $imagem; ?>" alt="">
+<?php 
+endif;
+?>
+							</div>
 						</div>
                 	</div>
                 	
