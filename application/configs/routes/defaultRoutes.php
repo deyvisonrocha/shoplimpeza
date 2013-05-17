@@ -30,6 +30,12 @@ $router->addRoute('ProdutosRouter', $route);
  * Área Administrativa
  */
 $route = new Zend_Controller_Router_Route(
+		'/manager/login',
+		array('module' => 'default', 'controller' => 'manager-categorias', 'action' => 'login')
+);
+$router->addRoute('ManagerLoginRouter', $route);
+
+$route = new Zend_Controller_Router_Route(
 		'/manager/produtos/:action/:id',
 		array('module' => 'default', 'controller' => 'manager-produtos', 'action' => ':action', 'id' => ':id')
 );
