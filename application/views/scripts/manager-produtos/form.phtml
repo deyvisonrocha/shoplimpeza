@@ -2,6 +2,7 @@
 $categorias_select = $this->categorias_select;
 $produto = $this->produto;
 $produto_versoes = $this->produto_versoes;
+$produto_caracteristicas = $this->produto_caracteristicas;
 
 $action = 'add';
 $title = 'Adicionar um Produto';
@@ -77,10 +78,27 @@ if (!empty($categorias_select)) {
 			</div>
 		</div>
 		
-		<div class="control-group">
+		<!-- <div class="control-group">
 			<label class="control-label" for="description">Descrição Completa</label>
 			<div class="controls">
-				<textarea rows="6" name="description" id="description"><?php echo $description; ?></textarea>
+				<textarea rows="6" name="description" id="description"><?php //echo $description; ?></textarea>
+			</div>
+		</div> -->
+
+		<div class="control-group">
+			<label class="control-label" for="character">Características</label>
+			<div class="controls character-list">
+				
+<?php 
+
+foreach ($produto_caracteristicas as $produto_caracteristica):
+	$name = $produto_caracteristica['description'];
+?>
+				<input type="text" id="product_character" name="product_characters[]" class="character-item" value="<?php echo $name; ?>" style="display: block; margin-bottom: 5px"/>
+<?php 
+endforeach;
+?>
+				<button type="button" class="btn btn-small add-character" style="display: block">+ Adicionar</button>
 			</div>
 		</div>
 		
@@ -209,6 +227,15 @@ if (!empty($produto_versoes)) {
 			}
 
 			return false;
+		});
+
+		$(".add-character").off('click');
+		$(".add-character").on('click', function () {
+			var btn = $(".character-item").clone().get(0);
+
+			$(btn).val('');
+			$(this).parent().prepend(btn);
+			
 		});
 		
 	});
