@@ -28,10 +28,11 @@ class ManagerProdutosController extends ManagerController
 			$name = $this->_getParam('name');
 			$category_id = $this->_getParam('category_id');
 			$description_short = $this->_getParam('description_short');
-			$description = $this->_getParam('description');
+			// $description = $this->_getParam('description');
 			$image = $this->_getParam('image');
 			$main = $this->_getParam('main');
 			$product_versions = $this->_getParam('product_versions');
+			$product_characters = $this->_getParam('product_characters');
 			
 			if (empty($category_id)) {
 				$flashMessages['error'] = 'A Categoria deve ser informada!';
@@ -47,12 +48,7 @@ class ManagerProdutosController extends ManagerController
 			}
 			
 			$data = array(
-				'category_id' => $category_id,
-				'name' => $name,
-				'description_short' => $description_short,
-				'description' => $description,
-				'image' => $image,
-				'main' => $main
+				'category_id' => $category_id, 'name' => $name, 'description_short' => $description_short, /*'description' => $description,*/ 'image' => $image, 'main' => $main
 			);
 			
 			$produtosModel = new ProdutosModel();
@@ -70,21 +66,37 @@ class ManagerProdutosController extends ManagerController
 					if (! empty($product_version)) {
 						$data = array();
 						$data['product_id'] = $id;
-						$data['name'] = $product_version['pv_name'];
-						$data['fragrance'] = $product_version['pv_fragrance'];
-						$data['color'] = $product_version['pv_color'];
-						$data['dilution'] = $product_version['pv_dilution'];
-						$data['packing'] = $product_version['pv_packing'];
+						$data['name'] = $product_version['name'];
+						$data['fragrance'] = $product_version['fragrance'];
+						$data['color'] = $product_version['color'];
+						$data['dilution'] = $product_version['dilution'];
+						$data['packing'] = $product_version['packing'];
 						
 						$produtosVersoesModel->add($data);
 					}
 				}
 			}
 			
+			array_filter($product_characters);
+			
+			if (! empty($product_characters)) {
+				
+				$produtosCaracteristicasModel = new ProdutosCaracteristicasModel();
+				
+				foreach ($product_characters as $product_character) {
+					$data = array();
+					$data['product_id'] = $id;
+					$data['description'] = $product_character;
+					
+					$produtosCaracteristicasModel->add($data);
+				}
+			}
+			
 			$flashMessages['success'] = "Produto adicionado com sucesso!";
 		}
 		catch (Zend_Exception $e) {
-			$flashMessages['error'] = "Ocorreu um erro: " . $e->getTraceAsString();
+			$flashMessages['error'] = "Ocorreu um erro: " .
+					 $e->getTraceAsString();
 		}
 		
 		$this->_helper->flashMessenger->addMessage($flashMessages);
@@ -98,19 +110,14 @@ class ManagerProdutosController extends ManagerController
 			$category_id = $this->_getParam('category_id');
 			$name = $this->_getParam('name');
 			$description_short = $this->_getParam('description_short');
-			$description = $this->_getParam('description');
+			// $description = $this->_getParam('description');
 			$image = $this->_getParam('image');
 			$main = $this->_getParam('main');
 			$product_versions = $this->_getParam('product_versions');
+			$product_characters = $this->_getParam('product_characters');
 			
 			$data = array(
-				'id' => $id,
-				'category_id' => $category_id,
-				'name' => $name,
-				'description_short' => $description_short,
-				'description' => $description,
-				'image' => $image,
-				'main' => $main
+				'id' => $id, 'category_id' => $category_id, 'name' => $name, 'description_short' => $description_short, /*'description' => $description,*/ 'image' => $image, 'main' => $main
 			);
 			
 			$produtosModel = new ProdutosModel();
@@ -120,7 +127,8 @@ class ManagerProdutosController extends ManagerController
 			$produtosVersoesModel = new ProdutosVersoesModel();
 			
 			if (! empty($product_versions)) {
-				$product_versions_exists = $produtosVersoesModel->getAllByProduct($id);
+				$product_versions_exists = $produtosVersoesModel->getAllByProduct(
+						$id);
 				
 				$product_versions_new = array();
 				
@@ -129,7 +137,7 @@ class ManagerProdutosController extends ManagerController
 					
 					if (! empty($product_version)) {
 						$data = array();
-						//$data['id'] = NULL;
+						// $data['id'] = NULL;
 						$data['product_id'] = $id;
 						$data['name'] = $product_version['name'];
 						$data['fragrance'] = $product_version['fragrance'];
@@ -141,13 +149,14 @@ class ManagerProdutosController extends ManagerController
 					}
 				}
 				
-				for ($i=0; $i < count($product_versions_exists); $i++) {
-					$diff = array_diff($product_versions_new[$i], $product_versions_exists[$i]);
+				for ($i = 0; $i < count($product_versions_exists); $i ++) {
+					$diff = array_diff($product_versions_new[$i], 
+							$product_versions_exists[$i]);
 					
 					if (isset($diff) && key($diff) == 'id' && count($diff) === 1) {
 						unset($diff);
 					}
-					else {
+					else if (!empty($diff)) {
 						$id = $product_versions_exists[$i]['id'];
 						$produtosVersoesModel->edit($diff, $id);
 					}
@@ -155,6 +164,39 @@ class ManagerProdutosController extends ManagerController
 			}
 			else {
 				$produtosVersoesModel->deleteAllByProduct($id);
+			}
+			
+			$produtosCaracteristicasModel = new ProdutosCaracteristicasModel();
+			
+			if (! empty($product_characters)) {
+				$product_characters_exists = $produtosCaracteristicasModel->getAllByProduct(
+						$id);
+				
+				$product_characters_new = array();
+				
+				foreach ($product_characters as $product_character) {
+					$data = array();
+					$data['product_id'] = $id;
+					$data['description'] = $product_character;
+					
+					$product_characters_new[] = $data;
+				}
+				
+				for ($i = 0; $i < count($product_characters_exists); $i ++) {
+					$diff = array_diff($product_characters_new[$i], 
+							$product_characters_exists[$i]);
+					
+					if (isset($diff) && key($diff) == 'id' && count($diff) === 1) {
+						unset($diff);
+					}
+					else if (!empty($diff)) {
+						$id = $product_characters_exists[$i]['id'];
+						$produtosCaracteristicasModel->edit($diff, $id);
+					}
+				}
+			}
+			else {
+				$produtosCaracteristicasModel->deleteAllByProduct($id);
 			}
 			
 			$flashMessages['success'] = "Produto editado com sucesso!";
@@ -179,7 +221,8 @@ class ManagerProdutosController extends ManagerController
 			$flashMessages['success'] = "Produto deletado com sucesso!";
 		}
 		catch (Zend_Exception $e) {
-			$flashMessages['error'] = "Ocorreu um erro: " . $e->getTraceAsString();
+			$flashMessages['error'] = "Ocorreu um erro: " .
+					 $e->getTraceAsString();
 		}
 		
 		$this->_helper->flashMessenger->addMessage($flashMessages);
@@ -195,8 +238,11 @@ class ManagerProdutosController extends ManagerController
 		if (! empty($id)) {
 			$produto = $produtosModel->get($id);
 			$produtosVersoesModel = new ProdutosVersoesModel();
+			$produtosCaracteristicasModel = new ProdutosCaracteristicasModel();
 			
 			$produto_versoes = $produtosVersoesModel->getAllByProduct($id);
+			$produto_caracteristicas = $produtosCaracteristicasModel->getAllByProduct(
+					$id);
 			
 			$this->view->assign('produto', $produto);
 		}
@@ -204,12 +250,16 @@ class ManagerProdutosController extends ManagerController
 		if (empty($produto_versoes)) {
 			$produto_versoes = array(
 				array(
-					'name' => '',
-					'fragrance' => '',
-					'color' => '',
-					'dilution' => '',
-					'packing' => ''
-				)
+				'name' => '', 'fragrance' => '', 'color' => '', 'dilution' => '', 'packing' => ''
+			)
+			);
+		}
+		
+		if (empty($produto_caracteristicas)) {
+			$produto_caracteristicas = array(
+				array(
+				'description' => ''
+			)
 			);
 		}
 		
@@ -217,6 +267,7 @@ class ManagerProdutosController extends ManagerController
 		
 		$categorias_select = $categoriasModel->getAll();
 		
+		$this->view->assign('produto_caracteristicas', $produto_caracteristicas);
 		$this->view->assign('produto_versoes', $produto_versoes);
 		$this->view->assign('categorias_select', $categorias_select);
 	}
