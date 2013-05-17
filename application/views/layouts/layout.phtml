@@ -131,7 +131,7 @@ $imgs_url = $this->imgs_url;
             <div class="footer container_12">
                 <div class="grid_3 alpha">
                     <h3>Área Restrita</h3>
-                    <form method="post" action="<?php echo $this->url(array('controller' => 'manager', 'action' => 'login'), null, true); ?>">
+                    <form method="post" action="<?php echo $this->url(array('controller' => 'manager', 'action' => 'login'), 'ManagerLoginRouter', true); ?>">
                         <div>
                             <input type="text" name="user_login" placeholder="usuário">
                         </div>
