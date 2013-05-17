@@ -32,8 +32,8 @@ class ProdutosCaracteristicasModel extends CoreModel
 	{
 		$select = new Zend_Db_Select($this->getAdapter());
 		
-		$select->from(array('pv' => $this->getName()), array('pv.*'));
-		$select->where('pv.id = ?', $id);
+		$select->from(array('pc' => $this->getName()), array('pc.*'));
+		$select->where('pc.id = ?', $id);
 		
 		$result = $this->getAdapter()->fetchRow($select);
 		
