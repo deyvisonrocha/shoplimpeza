@@ -31,9 +31,19 @@ class ProdutosModel extends CoreModel
 		$order_by = (!empty($filters['order_by']) ? $filters['order_by'] : 'ASC');
 		$order_name = (!empty($filters['order_name']) ? $filters['order_name'] : 'name');
 		$name = (!empty($filters['name']) ? $filters['name'] : null);
+		$main = (!empty($filters['main']) ? $filters['main'] : null);
+		$parent_id = (!empty($filters['parent_id']) ? $filters['parent_id'] : null);
 	
 		if (!empty($name)) {
 			$select->where('p.name LIKE "%?%"', $name);
+		}
+		
+		if (!empty($main)) {
+			$select->where('p.main = ?', $main);
+		}
+		
+		if (!empty($parent_id)) {
+			$select->where('p.parent_id = ?', $parent_id);
 		}
 	
 		$select->order($order_name . ' ' . $order_by);

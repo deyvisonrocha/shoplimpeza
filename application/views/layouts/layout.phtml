@@ -70,42 +70,19 @@ $imgs_url = $this->imgs_url;
 
                 <nav id="menu" class="grid_8 clearfix"><!--inicio menu-->
                     <ul>
-                        <?php 
-                        $request = Zend_Controller_Front::getInstance()->getRequest();
-						$controller = $request->getControllerName();
-						$action = $request->getActionName();
-                        $class_active = 'ativo';
-                        ?>
+<?php 
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$controller = $request->getControllerName();
+$action = $request->getActionName();
+$class_active = 'ativo';
+?>
                         <li>
                         	<a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'empresa'), 'EmpresaRouter', true); ?>" class="<?php echo ($controller == 'index' && $action == 'empresa') ? $class_active : ''; ?>">A Empresa</a>
                         </li>
                         <li>
                        		<a href="<?php echo $this->url(array('controller' => 'produtos'), 'default', true); ?>" class="<?php echo ($controller == 'produtos') ? $class_active : ''; ?>">Nossos Produtos</a>
-                            <ul class="sub_menu">
-                                <li><a href="">Químicos</a>
-                                    <ul class="sub_menu_2">
-                                        <li><a href="">Higiene Pessoal </a></li>
-                                        <li><a href="">Food Service</a></li>
-                                        <li><a href="">Limpadores Desinfetantes</a></li>
-                                        <li><a href="">Limpadores Especiais</a></li>
-                                        <li><a href="">Tratamento de Pisos</a></li>
-                                        <li><a href="">Lavanderia</a></li>
-                                        <li><a href="">Especialidades</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="">Funcionais</a>
-                                    <ul class="sub_menu_2">
-                                        <li><a href="">Linha Vidro</a></li>
-                                        <li><a href="">Linha Piso</a></li>
-                                        <li><a href="">Carros Funcionais</a></li>
-                                        <li><a href="">Baldes</a></li>
-                                        <li><a href="">Coletores</a></li>
-                                        <li><a href="">Dispensers</a></li>
-                                        <li><a href="">Papéis</a></li>
-                                        <li><a href="">Lixeiras</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                       		<?php echo $this->categoryMenu(0); ?>
+                            
                         </li>
                         <li>
                             <a href="">

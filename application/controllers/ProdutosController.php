@@ -13,11 +13,29 @@ class ProdutosController extends CoreController
 		$product = $this->_getParam('product');
 		$id = $this->_getParam('id');
 		
+		$category = ($category == ':category' ? null : $category);
+		$product = ($product == ':product' ? null : $product);
+		$id = ($id == ':id' ? null : $id);
+		
+		$filtersCategory = array();
+		
 		$categoriasModel = new CategoriasModel();
-		$categorias = $categoriasModel->listAll();
+		$categorias = $categoriasModel->listAll($filtersCategory);
 			
 		$produtosModel = new ProdutosModel();
-		$produtos = $produtosModel->listAll();
+		
+		$filtersProduct = array();
+		
+		if (!empty($category) && empty($product)) {
+			$filtersProduct['main'] = 1;
+			$filtersProduct['category_name'] = $category;
+		}
+		
+		$produtos = $produtosModel->listAll($filtersProduct);
+		
+		if (!empty($produtos)) {
+			$id = $produtos[0]['id'];
+		}
 		
 		$produtosVersoesModel = new ProdutosVersoesModel();
 		
@@ -26,7 +44,7 @@ class ProdutosController extends CoreController
 		$this->view->assign('categorias', $categorias);
 		$this->view->assign('produtos', $produtos);
 		
-		if ($category != ':category' && $product != ':product' && $id != ':id') {
+		if ($category != ':category' || $product != ':product' || $id != ':id') {
 			$produto = $produtosModel->get($id);
 			
 			$produto_versoes = $produtosVersoesModel->getAllByProduct($id);
