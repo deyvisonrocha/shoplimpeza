@@ -2,26 +2,26 @@
 
 class CoreController extends Zend_Controller_Action
 {
-	
+
 	protected $_page_title = '';
-	
+
 	protected $_absolute_path = null;
-	
+
 	protected $_relative_path = null;
-	
+
 	protected $_public_path = null;
-	
+
 	protected $_absolute_url = null;
-	
+
 	protected $_css_url = null;
-	
+
 	protected $_js_url = null;
-	
+
 	protected $_imgs_url = null;
-	
+
 	protected $_flashMessenger;
-	
-	public function init()
+
+	public function init ()
 	{
 		parent::init();
 		
@@ -29,7 +29,8 @@ class CoreController extends Zend_Controller_Action
 		
 		$this->_page_title = $config->configuration->default_title;
 		
-		$this->_relative_path = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
+		$this->_relative_path = substr($_SERVER['PHP_SELF'], 0, 
+				strrpos($_SERVER['PHP_SELF'], '/'));
 		
 		$this->_absolute_path = $_SERVER['DOCUMENT_ROOT'] . $this->_relative_path;
 		
@@ -48,7 +49,9 @@ class CoreController extends Zend_Controller_Action
 		$this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
 		$this->_redirector = $this->_helper->getHelper('Redirector');
 		$this->_view = $this->_helper->getHelper('ViewRenderer');
-		$this->view->setEscape(array($this, 'escape'));
+		$this->view->setEscape(array(
+			$this, 'escape'
+		));
 		
 		$this->view->assign('page_title', $this->_page_title);
 		$this->view->assign('relative_path', $this->_relative_path);
@@ -60,17 +63,17 @@ class CoreController extends Zend_Controller_Action
 		$this->view->assign('imgs_url', $this->_imgs_url);
 	}
 	
-	public static function clearSession()
+	public static function clearSession ()
 	{
 		$user_namespace = new Zend_Session_Namespace('user');
 		$user_namespace->unsetAll();
 	}
-	
-	public function getSessionUser()
+
+	public function getSessionUser ()
 	{
 		$session_namespace = Zend_Session::namespaceGet('user');
 		
-		if (!empty($session_namespace)) {
+		if (! empty($session_namespace)) {
 			return $session_namespace['session_user'];
 		}
 		
