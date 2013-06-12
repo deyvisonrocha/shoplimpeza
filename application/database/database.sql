@@ -103,3 +103,12 @@ USE `shoplimpeza` ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `shoplimpeza`.`users`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `shoplimpeza`;
+INSERT INTO `shoplimpeza`.`users` (`id`, `user`, `password`) VALUES (1, 'admin', '81dc9bdb52d04dc20036dbd8313ed055');
+
+COMMIT;
